@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>n8n Chat з параметрами</title>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; width: 100%; }
+  </style>
+</head>
+<body>
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  // 🔍 Зчитуємо параметри з URL
+  const params = new URLSearchParams(window.location.search);
+
+  const session_id = params.get('session_id') || 'unknown-session';
+  const customer_id = params.get('customer_id') || 'unknown-customer';
+  const user = params.get('user') || 'anonymous';
+
+  // 📦 Формуємо metadata
+  const metadata = {
+    session_id,
+    customer_id,
+    user
+  };
+
+  // 💬 Виводимо перше повідомлення
+  const initialMessages = [
+    `👋 Привіт, ${user}!`,
+    `Це чат для аккаунта ${customer_id} (сесія: ${session_id})`,
+  ];
+
+  // ▶️ Запускаємо чат
+  createChat({
+    mode: 'fullscreen',
+    webhookUrl: 'https://n8n.boni.tools/webhook/65cedb3a-eedf-4ab5-ba41-fd9553e787e6/chat',
+    metadata: metadata,
+    initialMessages: initialMessages
+  });
+</script>
+</body>
+</html>
