@@ -15,15 +15,15 @@
   // 🔍 Зчитуємо параметри з URL
   const params = new URLSearchParams(window.location.search);
 
-  const session_id = params.get('session_id') || 'unknown-session';
-  const customer_id = params.get('customer_id') || 'unknown-customer';
-  const user = params.get('user') || 'anonymous';
-
+  const ads_login_customer_id = params.get('ads_login_customer_id') || 'unknown-session';
+  const ads_customer_id = params.get('ads_customer_id') || 'unknown-customer';
+  const account_name = params.get('account_name') || 'anonymous';
+  const chatSessionKey = params.get('ads_customer_id') || 'anonymous';
   // 📦 Формуємо metadata
   const metadata = {
-    session_id,
-    customer_id,
-    user
+    ads_customer_id,
+    ads_login_customer_id,
+    account_name
   };
 
   // 💬 Виводимо перше повідомлення
@@ -36,6 +36,8 @@
   createChat({
     mode: 'fullscreen',
     webhookUrl: 'https://n8n.boni.tools/webhook/65cedb3a-eedf-4ab5-ba41-fd9553e787e6/chat',
+    chatSessionKey: chatSessionKey,
+	  loadPreviousSession: true,
     metadata: metadata,
     initialMessages: initialMessages
   });
